@@ -32,19 +32,13 @@ You should see:
 Submit the job to SLURM:
 
 ```bash
-sbatch just_lunch2.bash main.py
+sbatch just_lunch2.bash simple_prompt_local_llm.py
 ```
 
 ### With options:
 
-Skip preprocessing (if already done):
 ```bash
-sbatch just_lunch2.bash main.py --skip-preprocessing
-```
-
-Skip training (only evaluate):
-```bash
-sbatch just_lunch2.bash main.py --skip-preprocessing --skip-training
+sbatch just_lunch2.bash simple_prompt_local_llm.py --model-path meta-llama/Llama-2-7b-hf --prompt "Write a short summary about cats."
 ```
 
 ## Check job status
@@ -61,8 +55,8 @@ tail -f testGPU.out
 
 ## Important notes
 
-- The `just_lunch2.bash` script activates the `met_cuda_env` conda environment automatically
-- CUDA is only available on GPU nodes (partition `cuda`), not on login nodes
+- The `just_lunch2.bash` script activates the `ai2MDE` conda environment automatically
+- CUDA is only available on GPU nodes (partition `cuda`), **not on login nodes**
 - The script requests a `gpu:fat` resource - adjust if needed based on your cluster configuration
 - Don't use `nvidia-smi` or test CUDA on login nodes - it won't work
 
@@ -79,7 +73,7 @@ tail -f testGPU.out
 
 Re-create environment:
 ```bash
-conda env remove -n met_cuda_env
+conda env remove -n ai2MDE
 conda env create -f environment.yml
 ```
 
@@ -136,18 +130,8 @@ sbatch just_lunch2.bash simple_prompt_local_llm.py --model-path ./llama2-finetun
 
 If the compute nodes have no internet, make sure the folder `./llama2-finetuned` is on shared storage accessible by the compute nodes (NFS, Lustre, etc.).
 
-### 4) Interactive REPL on a GPU node
 
-For interactive usage on a GPU node, either use an interactive allocation or salloc, then run the script in REPL mode:
-
-```bash
-# Allocate an interactive GPU shell (example)
-salloc --gres=gpu:1 --cpus-per-task=8 --time=01:00:00 --partition=cuda
-conda activate met_cuda_env
-python simple_prompt_local_llm.py --model-path ./llama2-finetuned --interactive
-```
-
-### 5) Troubleshooting model downloads and auth
+### 4) Troubleshooting model downloads and auth
 
 - If download fails with a permissions error, make sure you have accepted the model license on Hugging Face and set `HUGGINGFACE_HUB_TOKEN` (or run `huggingface-cli login`).
 - If the model is too large for the GPU or you get OOM, use a smaller model (for testing try `TinyLlama/TinyLlama-1.1B-Chat-v1.0`) or run inference on CPU.
@@ -156,15 +140,6 @@ python simple_prompt_local_llm.py --model-path ./llama2-finetuned --interactive
 ```bash
 python simple_prompt_local_llm.py --model-path meta-llama/Llama-2-7b-hf --prompt "Hi" --device cpu
 ```
-
-### 6) Example SLURM job for small model (included)
-
-There is an example job `run_with_small_model.bash` that runs `main.py` with a small model; you can adapt it to call `simple_prompt_local_llm.py` instead:
-
-```bash
-sbatch run_with_small_model.bash
-```
-
 ---
 
 End of SLURM usage tips.
