@@ -20,6 +20,6 @@ def download_jar(group_id, artifact_id, version, output_dir):
 group_id = "com.google.guava"
 artifact_id = "guava"
 version = "33.3.1-jre"
-output_dir = "/Users/juridirocco/Desktop/phuong lecture"
+output_dir = "maven-jars"
 
 download_jar(group_id, artifact_id, version, output_dir)

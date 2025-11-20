@@ -1,10 +1,12 @@
 from github import Github
-
+import os
 # Replace with your personal access token
-access_token = "YOUR ACCESS TOKEN"
+GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN') or os.environ.get('GH_TOKEN')
+if not GITHUB_TOKEN:
+  raise EnvironmentError('Please set the GITHUB_TOKEN (or GH_TOKEN) environment variable')
 
 # Create a Github instance
-g = Github(access_token)
+g = Github(GITHUB_TOKEN)
 
 # Replace with the username you want to fetch repositories for
 username = "jdirocco"

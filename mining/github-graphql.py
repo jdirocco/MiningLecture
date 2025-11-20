@@ -1,7 +1,10 @@
 import requests
+import os
 
 # Replace 'your_token_here' with your GitHub personal access token
-GITHUB_TOKEN = 'YOUR TOKEN HERE'
+GITHUB_TOKEN = os.environ.get('GITHUB_TOKEN') or os.environ.get('GH_TOKEN')
+if not GITHUB_TOKEN:
+  raise EnvironmentError('Please set the GITHUB_TOKEN (or GH_TOKEN) environment variable')
 GITHUB_API_URL = 'https://api.github.com/graphql'
 
 def run_query(query):

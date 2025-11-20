@@ -1,0 +1,29 @@
+name: met_cuda_env
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - pytorch>=2.0.0
+  - pytorch-cuda=12.1  # Change to 11.8 if your NVIDIA driver supports only CUDA 11.8
+  - numpy>=1.24.0
+  - pandas>=2.0.0
+  - tqdm>=4.65.0
+  - sentencepiece>=0.1.99
+  - protobuf>=3.20.0
+  - pip:
+    - transformers>=4.35.0
+    - datasets>=2.14.0
+    - accelerate>=0.20.0
+    - rouge-score>=0.1.2
+    - peft>=0.6.0
+    - bitsandbytes>=0.41.0
+
+# Notes:
+# - pytorch-cuda provides CUDA runtime support for PyTorch (replaces deprecated cudatoolkit)
+# - If you have CUDA 11.8, change pytorch-cuda=12.1 to pytorch-cuda=11.8
+# - Check your CUDA version with: nvidia-smi
+# - bitsandbytes requires CUDA 11.x or 12.x; consult https://github.com/TimDettmers/bitsandbytes for compatibility

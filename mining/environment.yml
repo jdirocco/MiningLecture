@@ -1,0 +1,11 @@
+name: mininglecture
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.11
+  - openjdk
+  - pip
+  - pip:
+    - PyGithub
+    - requests
