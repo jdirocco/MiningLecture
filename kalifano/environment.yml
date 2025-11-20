@@ -1,4 +1,4 @@
-name: met_cuda_env
+name: ai4MDE
 channels:
   - pytorch
   - nvidia

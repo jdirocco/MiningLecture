@@ -15,7 +15,7 @@ export NUMEXPR_NUM_THREADS=${SLURM_CPUS_PER_TASK}
 export HUGGINGFACE_HUB_TOKEN="YOUR HF TOKEN HERE"
 # Activate conda environment
 source $(conda info --base)/etc/profile.d/conda.sh
-conda activate met_cuda_env
+conda activate ai4MDE
 
 # Run the script
 srun python "$@"
